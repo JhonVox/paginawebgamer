@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GamerTech AR - Componentes de PC en Realidad Aumentada</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ffff;
+            --background-color: #111;
+            --text-color: #fff;
+            --card-bg: #1a1a1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            top: 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .hero {
+            background-image: url('https://yvkjjzjjszzfnhxkdcwv.supabase.co/storage/v1/object/public/images/gaming-pc.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .components {
+            padding: 4rem 0;
+        }
+
+        .components h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--secondary-color);
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .component-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .component-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .component-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .component-info {
+            padding: 1.5rem;
+        }
+
+        .component-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .component-info p {
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .ar-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: var(--background-color);
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .ar-button:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .about {
+            background-color: var(--card-bg);
+            padding: 4rem 0;
+        }
+
+        .about h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .about-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-image {
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+        }
+
+        footer {
+            background-color: #000;
+            color: var(--text-color);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-icons {
+            font-size: 1.5rem;
+        }
+
+        .social-icons a {
+            color: var(--text-color);
+            margin: 0 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-content {
+                flex-direction: column;
+            }
+
+            .about-image {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">GamerTech AR</div>
+            <div class="nav-links">
+                <a href="#home">Inicio</a>
+                <a href="#components">Componentes</a>
+                <a href="#about">Nosotros</a>
+                <a href="#contact">Contacto</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Explora Componentes Gamer en AR</h1>
+                <p>Descubre el futuro de la personalización de PC con nuestra tecnología de Realidad Aumentada.</p>
+                <a href="#components" class="cta-button">Ver Componentes</a>
+            </div>
+        </section>
+
+        <section id="components" class="components">
+            <div class="container">
+                <h2>Componentes Gamer</h2>
+                <div class="component-grid">
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>Tarjeta Gráfica RTX 3080</h3>
+                            <p>Experimenta gráficos de última generación con ray tracing en tiempo real.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>Procesador Ryzen 9 5950X</h3>
+                            <p>Potencia extrema para gaming y creación de contenido.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>RAM RGB 32GB DDR4</h3>
+                            <p>Memoria de alta velocidad con iluminación RGB personalizable.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>SSD NVMe 1TB</h3>
+                            <p>Almacenamiento ultrarrápido para cargas instantáneas.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>Placa Base X570</h3>
+                            <p>Conectividad y rendimiento de última generación para tu build.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>Fuente de Poder 850W Gold</h3>
+                            <p>Energía estable y eficiente para componentes de alta gama.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>Caja Gaming RGB</h3>
+                            <p>Diseño elegante con flujo de aire optimizado e iluminación RGB.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>Refrigeración Líquida AIO</h3>
+                            <p>Mantén tu CPU fresca con estilo y rendimiento silencioso.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>Monitor Gaming 240Hz</h3>
+                            <p>Visualización ultra fluida para gaming competitivo.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-image" style="background-image: url('/placeholder.svg?height=200&width=300');"></div>
+                        <div class="component-info">
+                            <h3>Teclado  Mecánico RGB</h3>
+                            <p>Precisión y personalización para cada tecla que presiones.</p>
+                            <a href="#" class="ar-button">Ver en AR</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <h2>Sobre Nosotros</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>En GamerTech AR, fusionamos la pasión por el gaming con la innovación tecnológica. Nuestra misión es revolucionar la forma en que los entusiastas del PC gaming exploran y seleccionan sus componentes, utilizando la realidad aumentada para ofrecer una experiencia inmersiva y detallada.</p>
+                        <p>Con años de experiencia en la industria y un equipo de expertos en tecnología AR, estamos comprometidos a proporcionar las herramientas más avanzadas para que nuestros clientes tomen decisiones informadas y construyan el PC de sus sueños.</p>
+                    </div>
+                    <div class="about-image">
+                        <img src="/placeholder.svg?height=300&width=500" alt="Equipo GamerTech AR">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="#home">Inicio</a>
+                    <a href="#components">Componentes</a>
+                    <a href="#about">Nosotros</a>
+                    <a href="#contact">Contacto</a>
+                </div>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="YouTube">🎥</a>
+                </div>
+            </div>
+            <p>&copy; 2024 GamerTech AR. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+</html>
